@@ -11,14 +11,16 @@ import Map from './map/index.jsx';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/nests" element={<Nests />} />
-        <Route path="/nest/:id" element={<Nest />} />
-        <Route path="/map" element={<Map />} />
-      </Routes>
-    </Router>  
+    <div style={{height:'100vh', width:'100vw'}}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/nests" element={<Nests />} />
+          <Route path="/nest/:id" element={<Nest />} />
+          <Route path="/map" element={<Map />} />
+        </Routes>
+      </Router>  
+    </div>
   </React.StrictMode>
 );
