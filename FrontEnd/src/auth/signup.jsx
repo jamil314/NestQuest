@@ -21,9 +21,10 @@ const Signup = () => {
 
   return (
     <Box
-      maxW="md"
+      w={"calc(var(--fs-1) * 20)"}
+      // maxW="md"
       mx="auto"
-      p={10}
+      p={"var(--fs-3)"}
       borderWidth="1px"
       borderRadius="lg"
       bg="rgba(204, 230, 148, 0.5)"
@@ -34,8 +35,8 @@ const Signup = () => {
       color="#663b1e"
     >
       <Center mb={4} textAlign="center">
-        <HStack fontSize={"2rem"} fontWeight={"bold"}>
-          <Image src={signup} h={"4rem"} />
+        <HStack fontSize={"var(--fs-2)"} fontWeight={"bold"}>
+          <Image src={signup} h={"var(--fs-3)"} />
           <h1>Sign Up</h1>
         </HStack>
       </Center>
@@ -54,7 +55,7 @@ const Signup = () => {
             },
           }}
         >
-          <FormLabel fontWeight="900" fontSize="1.2rem">
+          <FormLabel fontWeight="900" fontSize="var(--fs-1)">
             Email Address:
           </FormLabel>
           <Input
@@ -79,7 +80,7 @@ const Signup = () => {
             },
           }}
         >
-          <FormLabel fontWeight="900" fontSize="1.2rem">
+          <FormLabel fontWeight="900" fontSize="var(--fs-1)">
             Password
           </FormLabel>
           <InputGroup>
@@ -121,7 +122,7 @@ const Signup = () => {
             },
           }}
         >
-          <FormLabel fontWeight="900" fontSize="1.2rem">
+          <FormLabel fontWeight="900" fontSize="var(--fs-1)">
             Confirm Password
           </FormLabel>
           <InputGroup>

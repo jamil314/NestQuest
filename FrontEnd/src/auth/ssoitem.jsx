@@ -4,7 +4,7 @@ const SSOItem = ({ title, icon }) => {
     <Box
       align={"row"}
       borderRadius={"2rem"}
-      w={"20rem"}
+      w={"calc(var(--fs-1) * 20)"}
       p={2}
       bg="rgba(255, 255, 255, 0.2)"
       boxShadow="0 4px 30px rgba(0, 0, 0, 0.1)"
@@ -24,7 +24,7 @@ const SSOItem = ({ title, icon }) => {
       cursor={"pointer"}
     >
       <HStack>
-        <Image src={icon} h={"2rem"} transition="transform 0.3s ease" />
+        <Image src={icon} h={"var(--fs-2)"} transition="transform 0.3s ease" />
         <Center w={"100%"}>
           <Text transition="all 0.3s ease" className="label" fontWeight="900">
             {title}
