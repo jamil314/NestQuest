@@ -1,20 +1,21 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import "dotenv/config";
 
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 
-import App from './App.jsx'
-import Auth from './auth/index.jsx';
+import App from "./App.jsx";
+import Auth from "./auth/index.jsx";
 import "./index.css";
-import Nests from './nests/index.jsx';
-import Nest from './nests/nest.jsx';
-import Map from './map/index.jsx';
+import Nests from "./nests/index.jsx";
+import Nest from "./nests/nest.jsx";
+import Map from "./map/index.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ChakraProvider>
-      <div style={{height:'100vh', width:'100vw'}}>
+      <div style={{ height: "100vh", width: "100vw" }}>
         <Router>
           <Routes>
             <Route path="/" element={<App />} />
@@ -23,7 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/nest/:id" element={<Nest />} />
             <Route path="/map" element={<Map />} />
           </Routes>
-        </Router>  
+        </Router>
       </div>
     </ChakraProvider>
   </React.StrictMode>
