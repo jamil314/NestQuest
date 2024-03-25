@@ -80,12 +80,11 @@ const NewNest = () => {
     );
   };
 
-  const Pages = [<Page1 key={0} />, <Page2 key={1} />, <Page3 key={2} />];
-
-  return (
-    <VStack h="100vh" paddingInline={2}>
-      <StepperComponent />
-      {/* <Page1 /> */}
+  const FormPart1 = () => {
+    return <div>Part 1;</div>;
+  };
+  const FormPart2 = () => {
+    return (
       <Box
         maxW="sm"
         borderWidth="1px"
@@ -182,17 +181,47 @@ const NewNest = () => {
               onChange={handleChange}
             />
           </FormControl>
-          <Button
-            colorScheme="blue"
-            onClick={() => {
-              console.log(formData);
-              setActiveStep(formData.bed);
-            }}
-          >
-            Submit
-          </Button>
+          <HStack>
+            <Button
+              w="50%"
+              colorScheme="blue"
+              onClick={() => {
+                console.log(formData);
+                setActiveStep(activeStep - 1);
+              }}
+            >
+              Previous Page
+            </Button>
+            <Button
+              w="50%"
+              colorScheme="blue"
+              onClick={() => {
+                console.log(formData);
+                setActiveStep(activeStep + 1);
+              }}
+            >
+              Next Page
+            </Button>
+          </HStack>
         </Stack>
       </Box>
+    );
+  };
+
+  const FormPart3 = () => {
+    return <div>Part 3;</div>;
+  };
+
+  const Pages = [
+    <FormPart1 key={0} />,
+    <FormPart2 key={1} />,
+    <FormPart3 key={2} />,
+  ];
+
+  return (
+    <VStack h="100vh" paddingInline={2}>
+      <StepperComponent />
+      {Pages[activeStep]}
     </VStack>
   );
 };
