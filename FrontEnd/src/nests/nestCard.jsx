@@ -5,12 +5,27 @@ import {
   VStack,
   HStack,
   StackDivider,
-  IconButton,
   Tooltip,
+  Image,
+  Center,
 } from "@chakra-ui/react";
 import { FaBed, FaBath, FaDollarSign, FaMapMarkerAlt } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
 import { TiTick } from "react-icons/ti";
+import { GiHouse } from "react-icons/gi";
+import icon from "../assets/mockNest/bedroom.jpg";
+
+const InfoCard = ({ icon, label, text }) => {
+  console.log(label, text);
+  return (
+    <Tooltip label={label}>
+      <HStack shadow="lg" p="1rem" h="2rem" borderRadius="md">
+        {icon}
+        <Text>{text}</Text>
+      </HStack>
+    </Tooltip>
+  );
+};
 
 const NestCard = (nest) => {
   const {
@@ -35,87 +50,80 @@ const NestCard = (nest) => {
       w="100%"
       onClick={() => (window.location.href = "/nest/" + nest.id)}
     >
-      <VStack spacing="1" divider={<StackDivider />}>
-        <Text fontSize="xl" fontWeight="bold">
-          {title}
-        </Text>
+      <VStack spacing="2" divider={<StackDivider />}>
+        <HStack>
+          <Image src={icon} w={"50%"} />
+          <Text fontSize="xl" fontWeight="bold">
+            {title}
+          </Text>
+        </HStack>
         <Text>{description}</Text>
+        <Center w={"100%"}>
+          <HStack>
+            <Badge
+              colorScheme={
+                tenantRestrictions.bachelor === "allowed" ? "green" : "red"
+              }
+            >
+              {tenantRestrictions.bachelor === "allowed" ? (
+                <TiTick
+                  style={{ display: "inline-block", verticalAlign: "middle" }}
+                />
+              ) : (
+                <ImCross
+                  style={{ display: "inline-block", verticalAlign: "middle" }}
+                />
+              )}
+              bachelor
+            </Badge>
+            <Badge
+              colorScheme={
+                tenantRestrictions.family === "allowed" ? "green" : "red"
+              }
+            >
+              {tenantRestrictions.family === "allowed" ? (
+                <TiTick
+                  style={{ display: "inline-block", verticalAlign: "middle" }}
+                />
+              ) : (
+                <ImCross
+                  style={{ display: "inline-block", verticalAlign: "middle" }}
+                />
+              )}
+              family
+            </Badge>
+          </HStack>
+        </Center>
         <HStack>
-          <Badge
-            colorScheme={
-              tenantRestrictions.bachelor === "allowed" ? "green" : "red"
-            }
-          >
-            {tenantRestrictions.bachelor === "allowed" ? (
-              <TiTick
-                style={{ display: "inline-block", verticalAlign: "middle" }}
-              />
-            ) : (
-              <ImCross
-                style={{ display: "inline-block", verticalAlign: "middle" }}
-              />
-            )}
-            bachelor
-          </Badge>
-          <Badge
-            colorScheme={
-              tenantRestrictions.family === "allowed" ? "green" : "red"
-            }
-          >
-            {tenantRestrictions.family === "allowed" ? (
-              <TiTick
-                style={{ display: "inline-block", verticalAlign: "middle" }}
-              />
-            ) : (
-              <ImCross
-                style={{ display: "inline-block", verticalAlign: "middle" }}
-              />
-            )}
-            family
-          </Badge>
-          <Badge colorScheme="blue">{leaseTerms.advance} Advance</Badge>
-          <Badge colorScheme="blue">{leaseTerms.duration}</Badge>
-          <Badge colorScheme="blue">
-            {leaseTerms.amount} {leaseTerms.duration}
-          </Badge>
+          <InfoCard
+            icon={<FaBed />}
+            label={layout.bed + " Bedrooms"}
+            text={layout.bed + " Beds"}
+          />
+          <InfoCard
+            icon={<FaBath />}
+            label={layout.bath + " Bathrooms"}
+            text={layout.bath + " Baths"}
+          />
         </HStack>
         <HStack>
-          <Tooltip label="Bedrooms" hasArrow>
-            <IconButton
-              aria-label="Bedrooms"
-              icon={<FaBed />}
-              variant="outline"
-            />
-          </Tooltip>
-          <Text>{layout.bed} Beds</Text>
-          <Tooltip label="Bathrooms" hasArrow>
-            <IconButton
-              aria-label="Bathrooms"
-              icon={<FaBath />}
-              variant="outline"
-            />
-          </Tooltip>
-          <Text>{layout.bath} Baths</Text>
+          <InfoCard
+            icon={<GiHouse />}
+            label={"Total Area: " + layout.area + " sqft"}
+            text={layout.area + " sqft"}
+          />
+          <InfoCard
+            icon={<FaDollarSign />}
+            label={"Monthly Rent: " + leaseTerms.rent.amount + " tk"}
+            text={leaseTerms.rent.amount + " tk"}
+          />
         </HStack>
         <HStack>
-          <Tooltip label="Rent" hasArrow>
-            <IconButton
-              aria-label="Rent"
-              icon={<FaDollarSign />}
-              variant="outline"
-            />
-          </Tooltip>
-          <Text>{leaseTerms.rent.amount} tk</Text>
-        </HStack>
-        <HStack>
-          <Tooltip label="Location" hasArrow>
-            <IconButton
-              aria-label="Location"
-              icon={<FaMapMarkerAlt />}
-              variant="outline"
-            />
-          </Tooltip>
-          <Text>{location.address}</Text>
+          <InfoCard
+            icon={<FaMapMarkerAlt />}
+            label={"Address: " + location.address}
+            text={location.address}
+          />
         </HStack>
       </VStack>
     </Box>

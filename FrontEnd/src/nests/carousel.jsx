@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Image, HStack, Center } from "@chakra-ui/react";
 
 import Elevation from "../assets/mockNest/elevation.jpg";
 import DrawingRoom from "../assets/mockNest/drawing-room.jpg";
@@ -38,6 +38,50 @@ export const Carousel = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    appendDots: (dots) => <Center spacing={0}>{dots}</Center>,
+    customPaging: (i) => (
+      <div
+        className="outer"
+        style={{
+          margin: "0 2px",
+          color: "blue",
+          width: 40 / images.length + "vw",
+          height: 40 / images.length + "vw",
+          maxHeight: "5vh",
+          maxWidth: "5vh",
+        }}
+      >
+        <div
+          key={i}
+          style={{
+            width: 40 / images.length + "vw",
+            height: 40 / images.length + "vw",
+            maxHeight: "5vh",
+            maxWidth: "5vh",
+            // margin: "0 5px",
+            cursor: "pointer",
+            border:
+              i === currentSlide
+                ? "2px solid #3182CE"
+                : "2px solid transparent",
+          }}
+          onClick={() => handleThumbnailClick(i)}
+        >
+          <img
+            src={images[i]}
+            alt={`Thumbnail ${i + 1}`}
+            style={{
+              width: 40 / images.length + "vw",
+              height: 40 / images.length + "vw",
+              maxHeight: "5vh",
+              maxWidth: "5vh",
+              objectFit: "cover",
+              borderRadius: "4px",
+            }}
+          />
+        </div>{" "}
+      </div>
+    ),
   };
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -47,7 +91,15 @@ export const Carousel = () => {
   };
 
   return (
-    <Box maxW="xl">
+    <Box
+      w="40vw"
+      style={{
+        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        backdropFilter: "blur(8px)",
+      }}
+      borderRadius={8}
+      h={"90vh"}
+    >
       <Slider {...sliderSettings}>
         {images.map((image, index) => (
           <div key={index}>
@@ -56,45 +108,14 @@ export const Carousel = () => {
               alt={`House ${index + 1}`}
               style={{
                 width: "100%",
-                maxHeight: "400px",
-                objectFit: "cover",
+                height: "80vh",
+                objectFit: "contain",
                 borderRadius: "8px",
               }}
             />
           </div>
         ))}
       </Slider>
-      <div
-        style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}
-      >
-        {images.map((image, index) => (
-          <div
-            key={index}
-            style={{
-              width: "50px",
-              height: "50px",
-              margin: "0 5px",
-              cursor: "pointer",
-              border:
-                index === currentSlide
-                  ? "2px solid #3182CE"
-                  : "2px solid transparent",
-            }}
-            onClick={() => handleThumbnailClick(index)}
-          >
-            <img
-              src={image}
-              alt={`Thumbnail ${index + 1}`}
-              style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                borderRadius: "4px",
-              }}
-            />
-          </div>
-        ))}
-      </div>
     </Box>
   );
 };

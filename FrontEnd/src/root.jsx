@@ -11,6 +11,8 @@ import "./index.css";
 import Nests from "./nests/index.jsx";
 import Nest from "./nests/nest.jsx";
 import Map from "./map/index.jsx";
+import NewNest from "./nests/new.jsx";
+import MultiStepForm from "./nests/multi.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -23,6 +25,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/nests" element={<Nests />} />
             <Route path="/nest/:id" element={<Nest />} />
             <Route path="/map" element={<Map />} />
+            <Route path="/new" element={<NewNest />} />
+            <Route path="/beta" element={<MultiStepForm />} />
           </Routes>
         </Router>
       </div>

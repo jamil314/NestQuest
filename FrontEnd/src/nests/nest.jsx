@@ -8,11 +8,17 @@ import {
   GridItem,
   Center,
   HStack,
+  IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { FaBed, FaBath, FaMapMarkerAlt } from "react-icons/fa";
+import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { GiHouse } from "react-icons/gi";
 import { mockNests } from "../api/mockApi";
 import { Carousel } from "./carousel";
+import { useState } from "react";
+
+import bg from "../assets/nest-bg.jpg";
 
 const Nest = ({ id }) => {
   const house = mockNests[0];
@@ -28,13 +34,30 @@ const Nest = ({ id }) => {
     tenantRestrictions,
   } = house;
 
-  console.log(house);
+  const [bookmarked, setBookmarked] = useState(false);
+  const toast = useToast();
 
   return (
-    <Center>
-      <HStack>
+    <Center
+      w="100vw"
+      h="100vh"
+      backgroundImage={bg}
+      bgSize={"cover"}
+      bgPos={"left"}
+    >
+      <div
+        style={{
+          position: "fixed",
+          height: "100%",
+          width: "100%",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(8px)",
+        }}
+      />
+      <HStack spacing={4}>
+        <Carousel />
         <Box
-          maxW="xl"
+          w={"50%"}
           borderWidth="1px"
           borderRadius="lg"
           overflow="hidden"
@@ -42,7 +65,29 @@ const Nest = ({ id }) => {
           boxShadow="lg"
           bg="white"
           color="gray.700"
+          position="relative"
+          ml={10}
         >
+          <IconButton
+            icon={bookmarked ? <IoBookmark /> : <IoBookmarkOutline />}
+            aria-label="Bookmark"
+            size="lg"
+            colorScheme="gray"
+            position="absolute"
+            top="4"
+            right="4"
+            onClick={() => {
+              toast({
+                title: bookmarked ? "Removed bookmark" : "Added bookmark",
+                description: house.title,
+                status: bookmarked ? "warning" : "success",
+                duration: 3000,
+                isClosable: true,
+                position: "top-right",
+              });
+              setBookmarked(!bookmarked);
+            }}
+          />
           <Heading size="lg" mb="4">
             {title}
           </Heading>
@@ -52,16 +97,24 @@ const Nest = ({ id }) => {
           <Divider my="4" />
           <Grid templateColumns="repeat(2, 1fr)" gap={4}>
             <GridItem>
-              <FaMapMarkerAlt /> <Text ml="2">{location.address}</Text>
+              <HStack>
+                <FaMapMarkerAlt /> <Text ml="2">{location.address}</Text>
+              </HStack>
             </GridItem>
             <GridItem>
-              <GiHouse /> <Text ml="2">{layout.area} sqft</Text>
+              <HStack>
+                <GiHouse /> <Text ml="2">{layout.area} sqft</Text>
+              </HStack>
             </GridItem>
             <GridItem>
-              <FaBed /> <Text ml="2">{layout.bed} Bedrooms</Text>
+              <HStack>
+                <FaBed /> <Text ml="2">{layout.bed} Bedrooms</Text>
+              </HStack>
             </GridItem>
             <GridItem>
-              <FaBath /> <Text ml="2">{layout.bath} Bathrooms</Text>
+              <HStack>
+                <FaBath /> <Text ml="2">{layout.bath} Bathrooms</Text>
+              </HStack>
             </GridItem>
             <GridItem colSpan={2}>
               <Badge
@@ -123,7 +176,6 @@ const Nest = ({ id }) => {
             </GridItem>
           </Grid>
         </Box>
-        <Carousel />
       </HStack>
     </Center>
   );
