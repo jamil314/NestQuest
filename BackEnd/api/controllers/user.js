@@ -61,6 +61,7 @@ exports.registerUser = async (req, res) => {
         id: newUser.id,
         username: newUser.username,
         token: generateToken(newUser),
+        key: process.env.JWT_KEY || "noKey:(",
       });
     }
   } catch (err) {
