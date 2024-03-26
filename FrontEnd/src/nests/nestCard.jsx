@@ -16,7 +16,6 @@ import { GiHouse } from "react-icons/gi";
 import icon from "../assets/mockNest/bedroom.jpg";
 
 const InfoCard = ({ icon, label, text }) => {
-  console.log(label, text);
   return (
     <Tooltip label={label}>
       <HStack shadow="lg" p="1rem" h="2rem" borderRadius="md">
@@ -36,7 +35,6 @@ const NestCard = (nest) => {
     leaseTerms,
     tenantRestrictions,
   } = nest;
-  console.log(leaseTerms);
   return (
     <Box
       padding="0"

@@ -11,7 +11,12 @@ const SSO = () => {
       <SSOItem icon={fbIcon} title={"Continue with Facebook"} />;
       <SSOItem icon={googleIcon} title={"Continue with Google"} />;
       {/* <SSOItem icon={ghIcon} title={"Continue with Github"} />; */}
-      <SSOItem icon={guest} title={"Continue as guest"} />;
+      <SSOItem
+        icon={guest}
+        title={"Continue as guest"}
+        onClick={() => (window.location.href = "/map")}
+      />
+      ;
     </VStack>
   );
 };

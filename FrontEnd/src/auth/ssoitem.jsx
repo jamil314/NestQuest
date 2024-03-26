@@ -1,5 +1,5 @@
 import { Image, HStack, Center, Text, Box } from "@chakra-ui/react";
-const SSOItem = ({ title, icon }) => {
+const SSOItem = ({ title, icon, onClick }) => {
   return (
     <Box
       align={"row"}
@@ -22,6 +22,7 @@ const SSOItem = ({ title, icon }) => {
         },
       }}
       cursor={"pointer"}
+      onClick={onClick}
     >
       <HStack>
         <Image src={icon} h={"2rem"} transition="transform 0.3s ease" />

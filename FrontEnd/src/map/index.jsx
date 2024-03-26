@@ -29,7 +29,6 @@ const Map = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {nests.map((nest) => {
-        console.log(nest);
         return (
           <Marker
             position={[nest.location.lat, nest.location.long]}

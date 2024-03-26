@@ -1,18 +1,19 @@
 import axios from "axios";
-import { mockApi } from "./mockApi";
+// import { mockApi } from "./mockApi";
 
-export const axiosCall = (requestConfig) => {
-  return mockApi(requestConfig);
-  //   return axios({
-  //     ...requestConfig,
-  //     baseURL: process.env.REACT_APP_BASE_URL,
-  //   });
+export const httpRequest = (requestConfig) => {
+  // return mockApi(requestConfig);
+  return axios({
+    ...requestConfig,
+    baseURL: import.meta.env.VITE_REACT_REQUEST_URL,
+    // baseURL: import.meta.env.VITE_REACT_REQUEST_URL_LOCAL,
+  });
 };
 
-export const callApi = (requestConfig) => {
+export const httpRequestProtected = (requestConfig) => {
   const jwtToken = localStorage.getItem("token");
   if (!jwtToken) throw new Error("User not logged in");
-  return axiosCall({
+  return httpRequest({
     ...requestConfig,
     headers: {
       BearerToken: jwtToken,

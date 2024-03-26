@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-// import "dotenv/config";
-
+// import dotenv from "dotenv";
+// dotenv.config();
 import { ChakraProvider } from "@chakra-ui/react";
 
 import App from "./App.jsx";
