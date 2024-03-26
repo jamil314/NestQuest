@@ -15,7 +15,7 @@ const generateToken = (user) => {
       username: user.username,
       userId: user.id,
     },
-    process.env.JWT_KEY,
+    process.env.JWT_KEY || "ldasjfnsakdfnjsdklfjnsdlkfnjds",
     {
       expiresIn: "1h",
     }
@@ -64,9 +64,10 @@ exports.registerUser = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err);
     if (err.code === "P2002")
       res.status(409).json({ msg: "Email already exists" });
-    else res.status(500).json({ msg: "Internal server error" });
+    else res.status(500).json({ err, msg: "Internal server error" });
   }
 };
 
