@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 
 const userRoutes = require("./api/routes/user");
+const nestRoutes = require("./api/routes/nest");
 const errorHandler = require("./api/middlewares/errorHandler");
 
 app.use(morgan("dev"));
@@ -17,6 +18,7 @@ const catchAsync = (fn) => (req, res, next) => {
 };
 
 app.use("/user", catchAsync(userRoutes));
+app.use("/nest", catchAsync(nestRoutes));
 
 app.get("/", (req, res) => {
   res.send("Hello World! ~ server");

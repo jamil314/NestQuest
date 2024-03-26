@@ -28,12 +28,14 @@ const InfoCard = ({ icon, label, text }) => {
 
 const NestCard = (nest) => {
   const {
-    title,
+    name,
     description,
-    location,
-    layout,
-    leaseTerms,
-    tenantRestrictions,
+    address,
+    bedroom,
+    rent,
+    bachelor,
+    bathroom,
+    area,
   } = nest;
   return (
     <Box
@@ -52,18 +54,14 @@ const NestCard = (nest) => {
         <HStack>
           <Image src={icon} w={"50%"} />
           <Text fontSize="xl" fontWeight="bold">
-            {title}
+            {name}
           </Text>
         </HStack>
         <Text>{description}</Text>
         <Center w={"100%"}>
           <HStack>
-            <Badge
-              colorScheme={
-                tenantRestrictions.bachelor === "allowed" ? "green" : "red"
-              }
-            >
-              {tenantRestrictions.bachelor === "allowed" ? (
+            <Badge colorScheme={bachelor === true ? "green" : "red"}>
+              {bachelor === true ? (
                 <TiTick
                   style={{ display: "inline-block", verticalAlign: "middle" }}
                 />
@@ -74,7 +72,7 @@ const NestCard = (nest) => {
               )}
               bachelor
             </Badge>
-            <Badge
+            {/* <Badge
               colorScheme={
                 tenantRestrictions.family === "allowed" ? "green" : "red"
               }
@@ -89,38 +87,38 @@ const NestCard = (nest) => {
                 />
               )}
               family
-            </Badge>
+            </Badge> */}
           </HStack>
         </Center>
         <HStack>
           <InfoCard
             icon={<FaBed />}
-            label={layout.bed + " Bedrooms"}
-            text={layout.bed + " Beds"}
+            label={bedroom + " Bedrooms"}
+            text={bedroom + " Beds"}
           />
           <InfoCard
             icon={<FaBath />}
-            label={layout.bath + " Bathrooms"}
-            text={layout.bath + " Baths"}
+            label={bathroom + " Bathrooms"}
+            text={bathroom + " Baths"}
           />
         </HStack>
         <HStack>
           <InfoCard
             icon={<GiHouse />}
-            label={"Total Area: " + layout.area + " sqft"}
-            text={layout.area + " sqft"}
+            label={"Total Area: " + area + " sqft"}
+            text={area + " sqft"}
           />
           <InfoCard
             icon={<FaDollarSign />}
-            label={"Monthly Rent: " + leaseTerms.rent.amount + " tk"}
-            text={leaseTerms.rent.amount + " tk"}
+            label={"Monthly Rent: " + rent + " tk"}
+            text={rent + " tk"}
           />
         </HStack>
         <HStack>
           <InfoCard
             icon={<FaMapMarkerAlt />}
-            label={"Address: " + location.address}
-            text={location.address}
+            label={"Address: " + address}
+            text={address}
           />
         </HStack>
       </VStack>

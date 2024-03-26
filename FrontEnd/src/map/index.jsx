@@ -4,6 +4,8 @@ import "leaflet/dist/leaflet.css";
 import houseMarker from "../assets/marker2.png";
 import { mockNests } from "../api/mockApi";
 import NestCard from "../nests/nestCard";
+import { useEffect, useState } from "react";
+import { getAllNests } from "../api";
 // import { FaBed } from "react-icons/fa";
 
 const customIcon = L.icon({
@@ -14,7 +16,18 @@ const customIcon = L.icon({
 });
 
 const Map = () => {
-  const nests = mockNests;
+  const [nests, setNests] = useState([]);
+
+  async function getNests() {
+    const response = await getAllNests();
+    const data = response.data.nests;
+    console.log(data);
+    setNests(data);
+  }
+
+  useEffect(() => {
+    getNests();
+  }, []);
 
   const position = [23.784371669488138, 90.39784565568004];
   return (
@@ -31,7 +44,7 @@ const Map = () => {
       {nests.map((nest) => {
         return (
           <Marker
-            position={[nest.location.lat, nest.location.long]}
+            position={[nest.lat, nest.long]}
             icon={customIcon}
             key={nest.id}
           >
@@ -39,8 +52,8 @@ const Map = () => {
               <NestCard {...nest} />
             </Popup>
             <Tooltip>
-              <div>bed: {nest.layout.bed}</div>
-              <div>rent: {nest.leaseTerms.rent.amount}</div>
+              <div>bed: {nest.bedroom}</div>
+              <div>rent: {nest.rent}</div>
             </Tooltip>
           </Marker>
         );

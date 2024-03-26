@@ -14,3 +14,10 @@ export const getEmailAvailibility = (email) => {
     method: "GET",
   });
 };
+
+export const getAllNests = () => {
+  return httpRequest({
+    url: "/nest/all",
+    method: "GET",
+  });
+};

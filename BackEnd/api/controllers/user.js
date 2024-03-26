@@ -1,8 +1,6 @@
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const { db, sql } = require("@vercel/postgres");
-const { getUserWithId, createUser } = require("../database/user");
 const { uid } = require("uid");
 
 const { PrismaClient } = require("@prisma/client");
