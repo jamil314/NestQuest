@@ -5,7 +5,8 @@ export const httpRequest = (requestConfig) => {
   // return mockApi(requestConfig);
   return axios({
     ...requestConfig,
-    baseURL: import.meta.env.VITE_REACT_REQUEST_URL,
+    baseURL: "https://nest-quest-orpin.vercel.app",
+    // baseURL: import.meta.env.VITE_REACT_REQUEST_URL,
     // baseURL: import.meta.env.VITE_REACT_REQUEST_URL_LOCAL,
   });
 };
