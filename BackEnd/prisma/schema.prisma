@@ -29,3 +29,40 @@ model Bookmark {
   user String
   @@id([nest, user])
 }
+
+model Nest {
+  id String @id
+  ownerId String
+  name String
+  description String?
+  address String
+  lat Float?
+  long Float?
+  bedroom Int
+  bathroom Int
+  floor Int
+  area Float
+  rent Float
+  bachelor Boolean
+  furnished Boolean?
+  ac Boolean?
+  oven Boolean?
+  fridge Boolean?
+  heater Boolean?
+  geyser Boolean?
+  petDog Boolean?
+  petCat Boolean?
+  gas GasType
+  electricity Boolean?
+  water Boolean?
+  securityDeposit Float?
+  otherRestrictions String?
+  lift Boolean?
+  serviceCharge Int
+}
+
+enum GasType {
+  prepaid_meter
+  postpaid
+  cylinder
+}
