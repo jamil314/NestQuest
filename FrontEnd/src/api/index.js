@@ -8,6 +8,14 @@ export const signUp = (user) => {
   });
 };
 
+export const login = (user) => {
+  return httpRequest({
+    url: "/user/login",
+    method: "POST",
+    data: user,
+  });
+};
+
 export const getEmailAvailibility = (email) => {
   return httpRequest({
     url: "/user/emailavailability/" + email,

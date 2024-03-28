@@ -28,7 +28,7 @@ import { getEmailAvailibility, signUp } from "../api";
 
 const invalidEmail = (email) => {
   const re =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return !re.test(email);
 };
 const invalidPassword = (password) => {
@@ -109,14 +109,11 @@ const Signup = () => {
         lastname: "",
         phonenumber: "",
       });
-      console.log(res.data);
-      const { id, username, token } = res.data;
-      localStorage.setItem("id", id);
+      const { user, token } = res.data;
+      localStorage.setItem("user", user);
       localStorage.setItem("token", token);
-      localStorage.setItem("username", username);
       window.location.href = "/map";
     } catch (error) {
-      console.log(error);
       switch (error.response.status) {
         case 409:
           setModalMessage("Email already exists");

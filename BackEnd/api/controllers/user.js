@@ -56,10 +56,8 @@ exports.registerUser = async (req, res) => {
       });
 
       res.status(201).json({
-        id: newUser.id,
-        username: newUser.username,
+        user: newUser,
         token: generateToken(newUser),
-        key: process.env.JWT_KEY || "noKey:(",
       });
     }
   } catch (err) {
@@ -72,7 +70,8 @@ exports.registerUser = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.params;
+    const { email, password } = req.body;
+    console.log(email, password);
     const userWithEmail = await prisma.users.findUnique({
       where: {
         email: email,
@@ -82,8 +81,7 @@ exports.login = async (req, res) => {
     if (userWithEmail) {
       delete userWithEmail.password;
       res.status(200).json({
-        id: userWithEmail.id,
-        username: userWithEmail.username,
+        user: userWithEmail,
         token: generateToken(userWithEmail),
       });
     } else {
@@ -96,8 +94,8 @@ exports.login = async (req, res) => {
       if (userWithUsername) {
         delete userWithUsername.password;
         res.status(200).json({
-          id: userWithUsername.id,
-          username: userWithUsername.username,
+          user: userWithUsername,
+
           token: generateToken(userWithUsername),
         });
       } else {

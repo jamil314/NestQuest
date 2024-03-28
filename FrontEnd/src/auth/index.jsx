@@ -17,8 +17,21 @@ import loginIcon from "../assets/birdhouse-login.png";
 import signupIcon from "../assets/nest-signup.png";
 import nestBg from "../assets/nest-bg.jpg";
 import logo from "../assets/logo.png";
+import { getAllNests } from "../api";
+import { useEffect } from "react";
 
 const Auth = () => {
+  async function getNests() {
+    try {
+      const response = await getAllNests();
+      const data = response.data.nests;
+      localStorage.setItem("nests", JSON.stringify(data));
+    } catch (error) {}
+  }
+
+  useEffect(() => {
+    getNests();
+  }, []);
   return (
     <Box bgImage={nestBg} bgSize={"cover"} bgPos={"left"}>
       <Center h="20vh" position="absolute" w="100vw">

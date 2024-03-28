@@ -19,14 +19,14 @@ const InfoCard = ({ icon, label, text }) => {
   return (
     <Tooltip label={label}>
       <HStack shadow="lg" p="1rem" h="2rem" borderRadius="md" bg="aliceblue">
-        {icon}
         <Text>{text}</Text>
+        {icon}
       </HStack>
     </Tooltip>
   );
 };
 
-const NestCard = (nest) => {
+const NestCardWide = ({ nest, moveTo }) => {
   const {
     name,
     description,
@@ -36,16 +36,19 @@ const NestCard = (nest) => {
     bachelor,
     bathroom,
     area,
+    lat,
+    long,
   } = nest;
   return (
     <Box
+      maxW="400px"
       padding="0"
       margin="0"
       border="none"
       borderRadius="lg"
       p="4"
       bg="white"
-      onClick={() => (window.location.href = "/nest/" + nest.id)}
+      // onClick={() => (window.location.href = "/nest/" + nest.id)}
     >
       <VStack spacing="2" divider={<StackDivider />}>
         <HStack>
@@ -96,15 +99,22 @@ const NestCard = (nest) => {
           />
         </HStack>
         <HStack>
-          <InfoCard
-            icon={<FaMapMarkerAlt />}
-            label={"Address: " + address}
-            text={address}
-          />
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              moveTo([lat, long]);
+            }}
+          >
+            <InfoCard
+              icon={<FaMapMarkerAlt />}
+              label={"Address: " + address}
+              text={address}
+            />
+          </button>
         </HStack>
       </VStack>
     </Box>
   );
 };
 
-export default NestCard;
+export default NestCardWide;
