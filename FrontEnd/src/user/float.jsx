@@ -64,7 +64,7 @@ const FloatingIcon = ({ firstName, lastName }) => {
             <MenuItem onClick={() => console.log("Visit Profile")}>
               Visit Profile
             </MenuItem>
-            <MenuItem onClick={() => console.log("Add House")}>
+            <MenuItem onClick={() => (window.location.href = "/new")}>
               Add House
             </MenuItem>
             <MenuItem onClick={() => console.log("Owned Houses")}>
