@@ -19,6 +19,7 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { ViewOffIcon, ViewIcon } from "@chakra-ui/icons";
 import { useState } from "react";
@@ -29,6 +30,7 @@ import { login } from "../api";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const toast = useToast();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,9 +40,18 @@ const Login = () => {
         password: formData.password,
       });
       const { user, token } = res.data;
-      localStorage.setItem("user", user);
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
-      window.location.href = "/map";
+      toast({
+        title: "Login Successfull",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+        position: "top-right",
+      });
+      setTimeout(() => {
+        window.location.href = "/map";
+      }, 2 * 1000);
     } catch (error) {
       switch (error.response.status) {
         case 404:

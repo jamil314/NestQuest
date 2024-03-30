@@ -19,7 +19,17 @@ const Part2 = ({ formdata, setFormdata, onNext, onPrev }) => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     formData2.forEach((value, key) => {
-      diff[key] = e.target[key].type === "checkbox" ? true : value;
+      switch (e.target[key].type) {
+        case "checkbox":
+          diff[key] = true;
+          break;
+        case "number":
+          diff[key] = Number(value);
+          break;
+        default:
+          diff[key] = value;
+          break;
+      }
     });
 
     checkboxes.forEach((checkbox) => {
@@ -34,13 +44,13 @@ const Part2 = ({ formdata, setFormdata, onNext, onPrev }) => {
     else if (clickedBtn === "prev") onPrev();
   };
 
-  const InputGroup = ({ label, children, height }) => {
+  const InputGroup = ({ label, children, height, width }) => {
     return (
       <FormControl>
         <Flex justifyContent="flex-start">
           <FormLabel
             htmlFor="name"
-            w="100px"
+            w={width || "200px"}
             textAlign="end"
             alignContent="center"
             h={height || "40px"}
@@ -55,16 +65,26 @@ const Part2 = ({ formdata, setFormdata, onNext, onPrev }) => {
 
   return (
     <>
-      <Box maxW="md" mx="auto" mt={8} p={4} borderWidth="1px" borderRadius="lg">
+      <Box
+        w="60%"
+        bg="white"
+        mx="auto"
+        mt={8}
+        p={4}
+        borderWidth="1px"
+        borderRadius="lg"
+      >
         <form onSubmit={handleSubmit}>
           <VStack spacing={4}>
             <HStack spacing={4}>
               <VStack
                 flexDir="column"
                 align="flex-start"
-                border="1px solid"
+                borderRight="1px solid"
                 borderColor="inherit"
                 p={2}
+                // bg="yellow"
+                w="100%"
               >
                 <Checkbox name="furnished" defaultChecked={formdata.furnished}>
                   Furnished?
@@ -85,20 +105,20 @@ const Part2 = ({ formdata, setFormdata, onNext, onPrev }) => {
                   Geyser?
                 </Checkbox>
               </VStack>
-              <VStack>
+              <VStack w="100%">
                 <VStack
                   flexDir="column"
                   align="flex-start"
-                  border="1px solid"
+                  borderBottom="1px solid"
                   borderColor="inherit"
                   p={2}
                 >
                   <InputGroup label="Gas" width="50px">
                     <Input
-                      id="gasType"
-                      name="gasType"
+                      id="gas"
+                      name="gas"
                       type="text"
-                      defaultValue={formdata.gasType}
+                      defaultValue={formdata.gas}
                       placeholder="PrePaid"
                     />
                   </InputGroup>
@@ -115,13 +135,7 @@ const Part2 = ({ formdata, setFormdata, onNext, onPrev }) => {
                     Lift?
                   </Checkbox>
                 </VStack>
-                <VStack
-                  flexDir="column"
-                  align="flex-start"
-                  border="1px solid"
-                  borderColor="inherit"
-                  p={2}
-                >
+                <VStack flexDir="column" align="flex-start" p={2} w="100%">
                   <Checkbox name="petCat" defaultChecked={formdata.petCat}>
                     Cat Allowed?
                   </Checkbox>

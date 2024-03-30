@@ -18,7 +18,18 @@ const Part1 = ({ formdata, setFormdata, onNext }) => {
     const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
     formData2.forEach((value, key) => {
-      diff[key] = e.target[key].type === "checkbox" ? true : value;
+      switch (e.target[key].type) {
+        case "checkbox":
+          diff[key] = true;
+          break;
+        case "number":
+          diff[key] = Number(value);
+          break;
+        default:
+          diff[key] = value;
+          break;
+      }
+      // diff[key] = e.target[key].type === "checkbox" ? true : value;
     });
 
     checkboxes.forEach((checkbox) => {
@@ -54,7 +65,14 @@ const Part1 = ({ formdata, setFormdata, onNext }) => {
 
   return (
     <>
-      <Box maxW="md" mx="auto" mt={8} p={4} borderWidth="1px" borderRadius="lg">
+      <Box
+        bg="white"
+        maxW="60%"
+        mx="auto"
+        p={8}
+        borderWidth="1px"
+        borderRadius="lg"
+      >
         <form onSubmit={handleSubmit}>
           <VStack spacing={4}>
             <InputGroup label="Name">

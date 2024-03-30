@@ -5,9 +5,11 @@ export const httpRequest = (requestConfig) => {
   // return mockApi(requestConfig);
   return axios({
     ...requestConfig,
-    baseURL: "https://nest-quest-orpin.vercel.app",
+    // baseURL: "https://nest-quest-orpin.vercel.app",
     // baseURL: import.meta.env.VITE_REACT_REQUEST_URL,
-    // baseURL: import.meta.env.VITE_REACT_REQUEST_URL_LOCAL,
+    baseURL:
+      import.meta.env.VITE_REACT_REQUEST_URL_LOCAL ||
+      "https://nest-quest-orpin.vercel.app",
   });
 };
 
@@ -19,5 +21,12 @@ export const httpRequestProtected = (requestConfig) => {
     headers: {
       BearerToken: jwtToken,
     },
+  });
+};
+
+export const nominatimApi = (requestConfig) => {
+  return axios({
+    ...requestConfig,
+    baseURL: "https://nominatim.openstreetmap.org",
   });
 };

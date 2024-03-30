@@ -48,7 +48,7 @@ const NestCardWide = ({ nest, moveTo }) => {
       borderRadius="lg"
       p="4"
       bg="white"
-      // onClick={() => (window.location.href = "/nest/" + nest.id)}
+      onClick={() => (window.location.href = "/nest/" + nest.id)}
     >
       <VStack spacing="2" divider={<StackDivider />}>
         <HStack>
@@ -101,7 +101,7 @@ const NestCardWide = ({ nest, moveTo }) => {
         <HStack>
           <button
             onClick={(e) => {
-              e.preventDefault();
+              e.stopPropagation();
               moveTo([lat, long]);
             }}
           >

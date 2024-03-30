@@ -1,4 +1,8 @@
-import { httpRequestProtected, httpRequest } from "./requestController";
+import {
+  httpRequestProtected,
+  httpRequest,
+  nominatimApi,
+} from "./requestController";
 
 export const signUp = (user) => {
   return httpRequest({
@@ -26,6 +30,27 @@ export const getEmailAvailibility = (email) => {
 export const getAllNests = () => {
   return httpRequest({
     url: "/nest/all",
+    method: "GET",
+  });
+};
+export const getNestById = (id) => {
+  return httpRequest({
+    url: "/nest/byid/" + id,
+    method: "GET",
+  });
+};
+
+export const createNest = (newNest) => {
+  return httpRequestProtected({
+    url: "/nest/new",
+    method: "POST",
+    data: newNest,
+  });
+};
+
+export const searchLocation = (query) => {
+  return nominatimApi({
+    url: `/search.php?q=${query}&format=jsonv2`,
     method: "GET",
   });
 };

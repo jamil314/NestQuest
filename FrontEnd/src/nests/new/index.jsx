@@ -11,16 +11,35 @@ import {
   Stepper,
   useSteps,
   VStack,
+  HStack,
+  Center,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+  useToast,
+  Image,
 } from "@chakra-ui/react";
 import Part1 from "./part1";
 import Part2 from "./part2";
 import Part3 from "./part3";
+import { createNest } from "../../api";
+import bg from "../../assets/nest-bg.jpg";
+import gif from "../../assets/bird-gif.gif";
+import Part4 from "./part4";
+
 // import { Step, Steps, useSteps } from "chakra-ui-steps";
 
 const steps = [
   { descriptions: ["Address", "Layout"] },
   { descriptions: ["Terms & Condition", "Restrictions"] },
-  { descriptions: ["Utilities", "Amenities"] },
+  { descriptions: ["Location"] },
+  { descriptions: ["Photos"] },
 ];
 
 const NewNest = () => {
@@ -29,9 +48,6 @@ const NewNest = () => {
     count: steps.length,
   });
   const [formData, setFormData] = useState({
-    drawing: true,
-    dinning: true,
-    vacantfloors: [2, 5],
     name: "",
     description: "",
     address: "",
@@ -60,11 +76,66 @@ const NewNest = () => {
     serviceCharge: "",
   });
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [modalMessage, setModalMessage] = useState("");
+  const toast = useToast();
+
+  const submitNest = (e) => {
+    e.preventDefault();
+    const optionalFields = ["description", "otherRestrictions"];
+    const missingFields = [];
+    const validFormData = Object.keys(formData).reduce((acc, cur) => {
+      const notMissing = optionalFields.includes(cur) || formData[cur] !== "";
+      if (!notMissing) missingFields.push(cur);
+      return acc && notMissing;
+    }, true);
+    if (validFormData) {
+      try {
+        const nestId = createNest(formData);
+        toast({
+          title: "Nest Added",
+          description: "New nest added wit id: " + nestId,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top-right",
+        });
+        window.history.back();
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setModalMessage(
+        "These Fields are missing: " + missingFields.toLocaleString()
+      );
+      onOpen();
+    }
+  };
+
   const StepperComponent = () => {
     return (
-      <Stepper index={activeStep} width="90vw" p="1rem 0">
+      <Stepper
+        right="0"
+        top="10%"
+        pos="fixed"
+        h="80%"
+        index={activeStep}
+        // width="60%"
+        p="1rem"
+        backdropBlur={3}
+        // bg="rgba(184, 210, 128, 1.5)"
+        // color="#663B1E"
+        // bgColor="#B8D280"
+        bg="white"
+        roundedBottomLeft={16}
+        roundedTopLeft={16}
+        orientation="vertical"
+      >
         {steps.map((step, index) => (
-          <Step key={index} onClick={() => setActiveStep(index)}>
+          <Step
+            key={index}
+            // onClick={() => setActiveStep(index)}
+          >
             <StepIndicator>
               <StepStatus
                 complete={<StepIcon />}
@@ -86,138 +157,6 @@ const NewNest = () => {
       </Stepper>
     );
   };
-
-  // const FormPart1 = () => {
-  //   return <div>Part 1;</div>;
-  // };
-  // const FormPart2 = () => {
-  //   return (
-  //     <Box
-  //       maxW="sm"
-  //       borderWidth="1px"
-  //       borderRadius="lg"
-  //       overflow="hidden"
-  //       p={4}
-  //       backgroundColor="rgba(255, 255, 255, 0.5)"
-  //       backdropFilter="blur(8px)"
-  //       className="layout"
-  //     >
-  //       <Stack spacing={4}>
-  //         <Flex justify="space-between" align="center">
-  //           <Text fontSize="xl" fontWeight="bold">
-  //             Layout
-  //           </Text>
-  //         </Flex>
-  //         <FormControl as={HStack}>
-  //           <FormLabel>Bedrooms</FormLabel>
-  //           <Input
-  //             type="number"
-  //             name="bed"
-  //             value={formData.bed}
-  //             onChange={handleChange}
-  //           />
-  //         </FormControl>
-  //         <FormControl as={HStack}>
-  //           <FormLabel>Bathrooms</FormLabel>
-  //           <Input
-  //             type="number"
-  //             name="bath"
-  //             value={formData.bath}
-  //             onChange={handleChange}
-  //           />
-  //         </FormControl>
-  //         <Checkbox
-  //           name="drawing"
-  //           isChecked={formData.drawing}
-  //           onChange={handleChange}
-  //         >
-  //           Drawing Room
-  //         </Checkbox>
-  //         <Checkbox
-  //           name="dinning"
-  //           isChecked={formData.dinning}
-  //           onChange={handleChange}
-  //         >
-  //           Dining Room
-  //         </Checkbox>
-  //         <FormControl as={HStack}>
-  //           <FormLabel>Total Floors</FormLabel>
-  //           <Input
-  //             type="number"
-  //             name="totalfloor"
-  //             value={formData.totalfloor}
-  //             onChange={handleChange}
-  //           />
-  //         </FormControl>
-  //         <FormControl as={HStack}>
-  //           <FormLabel>Vacant Floors</FormLabel>
-  //           <Stack direction="row">
-  //             {[...Array(formData.totalfloor)].map((_, index) => (
-  //               <Checkbox
-  //                 key={index}
-  //                 name={`vacantfloors-${index}`}
-  //                 isChecked={formData.vacantfloors.includes(index + 1)}
-  //                 onChange={(e) => {
-  //                   const floor = index + 1;
-  //                   if (e.target.checked) {
-  //                     setFormData((prevData) => ({
-  //                       ...prevData,
-  //                       vacantfloors: [...prevData.vacantfloors, floor],
-  //                     }));
-  //                   } else {
-  //                     setFormData((prevData) => ({
-  //                       ...prevData,
-  //                       vacantfloors: prevData.vacantfloors.filter(
-  //                         (f) => f !== floor
-  //                       ),
-  //                     }));
-  //                   }
-  //                 }}
-  //               >
-  //                 {index + 1}
-  //               </Checkbox>
-  //             ))}
-  //           </Stack>
-  //         </FormControl>
-  //         <FormControl as={HStack}>
-  //           <FormLabel>Area (sq ft)</FormLabel>
-  //           <Input
-  //             type="number"
-  //             name="area"
-  //             value={formData.area}
-  //             onChange={handleChange}
-  //           />
-  //         </FormControl>
-  //         <HStack>
-  //           <Button
-  //             w="50%"
-  //             colorScheme="blue"
-  //             onClick={() => {
-  //               console.log(formData);
-  //               setActiveStep(activeStep - 1);
-  //             }}
-  //           >
-  //             Previous Page
-  //           </Button>
-  //           <Button
-  //             w="50%"
-  //             colorScheme="blue"
-  //             onClick={() => {
-  //               console.log(formData);
-  //               setActiveStep(activeStep + 1);
-  //             }}
-  //           >
-  //             Next Page
-  //           </Button>
-  //         </HStack>
-  //       </Stack>
-  //     </Box>
-  //   );
-  // };
-
-  // const FormPart3 = () => {
-  //   return <div>Part 3;</div>;
-  // };
 
   const Pages = [
     <Part1
@@ -244,19 +183,72 @@ const NewNest = () => {
       formdata={formData}
       setFormdata={setFormData}
       onNext={() => {
-        console.log(formData);
+        setActiveStep(3);
       }}
       onPrev={() => {
         setActiveStep(1);
       }}
     />,
+    <Part4
+      key={3}
+      formdata={formData}
+      setFormdata={setFormData}
+      onNext={submitNest}
+      onPrev={() => {
+        setActiveStep(2);
+      }}
+    />,
   ];
 
   return (
-    <VStack h="100vh" paddingInline={2}>
-      <StepperComponent />
-      {Pages[activeStep]}
-    </VStack>
+    <>
+      <div
+        style={{
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          backgroundColor: "rgba(255, 255, 255, 0.5)",
+          backdropFilter: "blur(8px)",
+          // zIndex: "1",
+        }}
+      />
+      <HStack
+        w="100vw"
+        h="100vh"
+        backgroundImage={bg}
+        // blur={12}
+        // bgColor="#B8D280"
+        bgSize={"cover"}
+        bgPos={"left"}
+        paddingInline={2}
+        zIndex={3}
+      >
+        <Center w="30%" ml="10%" position="relative">
+          <Image src={gif} borderRadius={12} shadow={12} />
+        </Center>
+        <VStack w="50%" h="100%" position="relative">
+          <StepperComponent />
+          <Center h="100%" w="100%" backdropBlur={3} borderColor="#663B1E">
+            {Pages[activeStep]}
+          </Center>
+        </VStack>
+      </HStack>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> Upload Failed </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{modalMessage}</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            {/* <Button variant='ghost'>Secondary Action</Button> */}
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
   );
 };
 

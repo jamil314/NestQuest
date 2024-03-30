@@ -110,7 +110,7 @@ const Signup = () => {
         phonenumber: "",
       });
       const { user, token } = res.data;
-      localStorage.setItem("user", user);
+      localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("token", token);
       window.location.href = "/map";
     } catch (error) {

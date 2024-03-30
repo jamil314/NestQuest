@@ -9,6 +9,8 @@ exports.craeteNest = async (req, res) => {
     const newNest = await prisma.nest.create({
       data: {
         ...req.body,
+        id: uid(),
+        ownerId: req.userId,
       },
     });
 
@@ -22,11 +24,25 @@ exports.craeteNest = async (req, res) => {
 };
 
 exports.getAll = async (req, res) => {
-  console.log("here");
   try {
     const allNests = await prisma.nest.findMany();
     console.log(allNests);
     res.status(200).json({ nests: allNests });
+  } catch (error) {
+    res.status(500).json({ error, msg: "Internal server error" });
+  }
+};
+exports.getNestById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const nest = await prisma.nest.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    console.log(nest);
+    res.status(200).json({ nests: nest });
   } catch (error) {
     res.status(500).json({ error, msg: "Internal server error" });
   }

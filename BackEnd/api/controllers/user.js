@@ -45,12 +45,14 @@ exports.registerUser = async (req, res) => {
     if (invalidEmail(req.body.email) || invalidPassword(req.body.password))
       res.status(400).json({ msg: "Invalid input" });
     else {
+      const hash = await bcrypt.hash(req.body.password, saltRounds);
+      console.log(req.body.email, req.body.password, hash);
       const newUser = await prisma.users.create({
         data: {
           ...req.body,
           id: uid(),
           username: req.body.email,
-          password: await bcrypt.hash(req.body.password, saltRounds),
+          password: hash,
           status: "000",
         },
       });
@@ -71,36 +73,27 @@ exports.registerUser = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
-    const userWithEmail = await prisma.users.findUnique({
-      where: {
-        email: email,
-        password: password,
-      },
-    });
-    if (userWithEmail) {
-      delete userWithEmail.password;
-      res.status(200).json({
-        user: userWithEmail,
-        token: generateToken(userWithEmail),
-      });
-    } else {
-      const userWithUsername = await prisma.users.findUnique({
+    const hash = await bcrypt.hash(req.body.password, saltRounds);
+    console.log(email, password, hash);
+    const user =
+      (await prisma.users.findUnique({
+        where: {
+          email: email,
+        },
+      })) ||
+      (await prisma.users.findUnique({
         where: {
           username: email,
-          password: password,
         },
+      }));
+    if (user && (await bcrypt.compare(req.body.password, user.password))) {
+      delete user.password;
+      res.status(200).json({
+        user: user,
+        token: generateToken(user),
       });
-      if (userWithUsername) {
-        delete userWithUsername.password;
-        res.status(200).json({
-          user: userWithUsername,
-
-          token: generateToken(userWithUsername),
-        });
-      } else {
-        res.status(404).json({ msg: "No such user" });
-      }
+    } else {
+      res.status(404).json({ msg: "No such user" });
     }
   } catch (error) {
     console.log(error);
