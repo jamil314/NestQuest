@@ -150,11 +150,13 @@ const Map = () => {
       <Button
         pos="absolute"
         bottom="100px"
-        right={0}
+        right="8px"
         zIndex="999"
         onClick={locateUser}
-        borderRightRadius="100px"
+        borderRadius="100px"
         overflow="hidden"
+        p={0}
+        border="2px solid gray"
       >
         <IoMdLocate size={30} />
       </Button>

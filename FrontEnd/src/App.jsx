@@ -1,9 +1,6 @@
 const App = () => {
-  return (
-    <div>
-      hello world
-    </div>
-  )
-}
+  window.location.href = "/auth";
+  // return <div>hello world</div>;
+};
 
-export default App
+export default App;

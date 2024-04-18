@@ -35,11 +35,11 @@ const FloatingIcon = () => {
       <Box shadow="md">
         <Menu isOpen={isOpen[0]}>
           <MenuButton
-            size={60}
+            size={40}
             as={IconButton}
             aria-label="Options"
             //   icon={getInitials()}
-            icon={<HiFilter size={60} shadow="md" />}
+            icon={<HiFilter size={40} shadow="md" />}
             onClick={() => setIsOpen(isOpen[0] ? [0, 0] : [1, 0])}
           />
           <MenuList>
@@ -101,16 +101,16 @@ const FloatingIcon = () => {
       <Box shadow="md">
         <Menu isOpen={isOpen[1]}>
           <MenuButton
-            size={60}
+            size={40}
             as={IconButton}
             aria-label="Options"
             icon={
               localStorage.getItem("user") ? (
-                <Text fontSize={40} p={2}>
+                <Text fontSize={20} p={2}>
                   {getInitial()}
                 </Text>
               ) : (
-                <FaEarlybirds size={60} shadow="md" />
+                <FaEarlybirds size={40} shadow="md" />
               )
             }
             onClick={() => setIsOpen(isOpen[1] ? [0, 0] : [0, 1])}
