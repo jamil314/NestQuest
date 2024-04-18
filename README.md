@@ -7,7 +7,9 @@ Here to help you with your quest for nest
 - ChakraUi
 - LeafLet
 ### Backend:
-- Placeholder
+- ExpressJS
+- Vercel Postgress with Prisma
+- jwt
 ## Guide to run on local
 ```
 git clone https://github.com/jamil314/NestQuest
@@ -24,9 +26,17 @@ Now open another terminal on same directory: `NestQuest`
 <td>
 
 ```
-cd BackEnd
-${place holder}
+cd FrontEnd
+npm i
+npm run dev
 ```
+Or, if you are using yarn:
+```
+cd FrontEnd
+yarn i
+yarn dev
+```
+
 </td>
 <td>
 
